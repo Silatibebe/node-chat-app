@@ -8,12 +8,6 @@ socket.on('disconnect',function(){
 });
 
 //custom events
-//createEmail event
-socket.emit('createMessage',{
-    from: 'foo',
-    text: 'hi , baz.'
-});
-
 socket.on('newMessage',function(message){
     console.log('newMessage',message);
 });
