@@ -28,10 +28,11 @@ console.log('User was disconnected!');
 socket.broadcast.emit('newMessage',generateMessage('Admin','new user joined'));
 
 //listen for event emitted by client
-socket.on('createMessage',(message) =>{
+socket.on('createMessage',(message,callback) =>{
     console.log('createMessage event emitted from client',message);
    //io emit 
    io.emit('newMessage',generateMessage(message.from,message.text));
+   callback('This is from server.');
 
 });
 });
