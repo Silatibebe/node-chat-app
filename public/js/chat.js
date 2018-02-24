@@ -16,14 +16,32 @@ function scrollToBottom(){
     }
 };
 socket.on('connect',function(){
-    console.log('connected to server!');
+   
+    var params = jQuery.deparam(window.location.search);
+    socket.emit('join', params, function(err){
+        if(err){
+            alert(err);
+         window.location.href = '/';
+        }else{
+          console.log('no error in user login');
+        }
+    });
     
 });
+
 //listen for event emitted by server
 socket.on('disconnect',function(){
     console.log('disconnected from server');
 });
 
+socket.on('updateUserList', function(usersList){
+    var ol = jQuery('<ol></ol>');
+    usersList.forEach(function(user){
+        ol.append(jQuery('<li></li>').text(user));
+    });
+    jQuery('#users').html(ol);
+ });
+ 
 //newMessage
 socket.on('newMessage',function(message){
     var formatedTime = moment(message.createdAt).format('h:mm a');
